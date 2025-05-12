@@ -10,6 +10,8 @@ function App() {
       <Home />
       <Footer />
     </Router>
+
+    // Suriya Murugan
     
     //   <Header />
     //   <Home />
