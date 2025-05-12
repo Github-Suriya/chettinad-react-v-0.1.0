@@ -10,8 +10,6 @@ function App() {
       <Home />
       <Footer />
     </Router>
-
-    // <>
     
     //   <Header />
     //   <Home />
