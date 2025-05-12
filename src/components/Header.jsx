@@ -127,9 +127,9 @@ const Header = () => {
 
                             <div className="header-middle">
                                 <div className="main-logo-box">
-                                    <a href="">
+                                    <Link to="/">
                                         <img src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/images/resources/care-logo.png" alt="care-logo" title="" />
-                                    </a>
+                                    </Link>
                                 </div>
 
                                 <div className="nav-outer style1 clearfix">

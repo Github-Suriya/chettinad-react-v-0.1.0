@@ -255,5 +255,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// Rough Work
