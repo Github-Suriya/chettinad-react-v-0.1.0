@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <!-- Load jQuery(1.7+) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+
+  <!-- Customized Style -->
+  <link rel="stylesheet" href="owl-carousel/owl.theme.css" />
+  <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+  <title>Chettinad Academy of Research and Education</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="apple-touch-icon" sizes="180x180"
+    href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/images/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png"
+    href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/images/favicon/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png"
+    href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/images/favicon/favicon-16x16.png" sizes="16x16" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&amp;display=swap"
+    rel="stylesheet" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/animate.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/aos.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/custom-animate.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/fancybox.min.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/flaticon.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/imp.css" />
+  <link rel="stylesheet"
+    href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/jquery.bootstrap-touchspin.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/magnific-popup.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/nice-select.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/owl.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/rtl.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/scrollbar.css" />
+  <link rel="stylesheet" href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/swiper.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/header-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/banner-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/about-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/blog-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/fact-counter-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/faq-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/contact-page.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/breadcrumb-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/team-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/partner-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/testimonial-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/services-section.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/module-css/footer-section.css" />
+
+  <link rel="stylesheet" href="/chettinad-react/assets/css/navlinks.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/css/lightgallery-bundle.min.css" />
+
+  <link rel="stylesheet" href="/chettinad-react/assets/css/school_of_arc.css" />
+
+  <link href="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/css/color/theme-color.css" id="jssDefault"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/style.css" />
+  <link rel="stylesheet" href="/chettinad-react/assets/css/responsive.css" />
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/aos.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/appear.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/isotope.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.bootstrap-touchspin.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.countTo.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.easing.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.event.move.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.fancybox.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.magnific-popup.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.nice-select.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery.paroller.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery-sidebar-content.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/knob.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/map-script.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/owl.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/pagenav.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/scrollbar.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/swiper.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/tilt.jquery.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/TweenMax.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/validation.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/wow.js"></script>
+
+
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/jquery-1color-switcher.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/parallax.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/skrollr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script src="https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/js/custom.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/lightgallery.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/plugins/thumbnail/lg-thumbnail.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/plugins/zoom/lg-zoom.umd.min.js"></script>
+
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+</body>
+
+</html>
