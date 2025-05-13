@@ -1,0 +1,359 @@
+.sticky-icon {
+    display: none;
+}
+
+.breadcrump_section {
+    position: relative;
+    overflow: hidden;
+}
+
+/*.breadcrump_header {*/
+/*    width: max-content;*/
+/*    position: absolute;*/
+/*    padding: 0 10px;*/
+/*    left: 10px;*/
+/*    bottom: 20px;*/
+/* transform: translate(-50%, -50%); */
+/* color: #2e2a28 !important; */
+/*    z-index: 12;*/
+/* border: 2px solid #17345a; */
+/*    box-shadow: 0 2px 20px rgb(0 166 224);*/
+/* border-style: dashed; */
+/*    border-radius: 55px;*/
+/*    align-items: center;*/
+/*}*/
+.breadcrump_header {
+    position: relative;
+    top: -20px;
+    z-index: 12;
+}
+
+.breadcrump_section::before {
+    content: "";
+    display: block;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.breadcrump_header h2 {
+    font-family: var(--thm-font);
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 500;
+    display: inline;
+}
+
+
+.breadcrump_header h4 {
+    font-family: var(--thm-font);
+    color: #17345a;
+    font-weight: normal;
+}
+
+.schools_menus ul {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    list-style: none;
+    /* Removes bullet points */
+    margin: 0;
+    /* Removes default margin */
+}
+
+/* List item styling */
+.schools_menus ul li {
+    padding: 0 15px;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease, transform 0.3s ease;
+}
+
+/* Anchor link styling */
+.schools_menus ul li a {
+    color: #161613;
+    text-decoration: none;
+    /* Removes underline */
+    position: relative;
+    z-index: 1;
+    /* Keeps text above pseudo-element */
+    transition: color 0.5s ease;
+}
+
+/* Active state styling */
+.schools_menus ul li.active {
+    background-color: #17345a;
+    transform: translateY(-3px);
+    /* Lift effect */
+    box-shadow: 0 4px 8px rgba(0, 166, 224, 0.5);
+}
+
+/* Active state link color */
+.schools_menus ul li.active a {
+    color: #fff !important;
+}
+
+/* Hover animation: background and lift */
+.schools_menus ul li:hover {
+    background-color: #17345a;
+    box-shadow: 0 4px 8px rgba(0, 166, 224, 0.5);
+    transform: translateY(-3px);
+    /* Subtle lift on hover */
+}
+
+/* Hover animation: link color */
+.schools_menus ul li:hover a {
+    color: #fff !important;
+}
+
+/* Fancy sliding underline effect */
+.schools_menus ul li::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #00a6e0;
+    /* Underline color */
+    transition: width 0.4s ease, left 0.4s ease;
+}
+
+/* Slide effect on hover */
+.schools_menus ul li:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+
+#imageCarousel.owl-carousel .item img {
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    /* opacity: 0.7; */
+    /* filter: blur(2px); */
+}
+
+#imageCarousel.owl-carousel.owl-loaded {
+    display: block;
+    height: 550px;
+}
+
+@media screen and (max-width: 576px) {
+
+    #imageCarousel.owl-carousel.owl-loaded {
+        height: 50%;
+    }
+
+    .breadcrump_header h2 {
+        font-size: 1.2rem;
+    }
+
+    .schools_menus ul li a {
+        font-size: 8px;
+    }
+
+    .schools_menus ul li {
+        padding: 0;
+    }
+
+    .schools_menus ul {
+        justify-content: space-around;
+        padding: 5px 2px;
+    }
+
+    .card_content {
+        width: auto;
+    }
+
+    .breadcrump_section::before {
+        height: 100%;
+    }
+
+    #navbarNav.navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 50%;
+        background-color: white;
+        z-index: 1000;
+        padding: 36px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+    }
+
+    #navbarNav .navbar-nav .nav-link {
+        font-size: 15px;
+    }
+
+    .breadcrump_header {
+        position: relative;
+        top: -34px;
+        left: 47px;
+    }
+
+    .single-item {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .breadcrump-heading {
+        font-size: 18px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .apply-new-btn {
+        padding: 8px !important;
+        font-size: 10px !important;
+    }
+
+    .breadcrump-wrapper {
+        bottom: 25% !important;
+    }
+
+    #imageCarousel.owl-carousel .owl-stage {
+        height: 100%;
+    }
+
+    #imageCarousel.owl-carousel .owl-item .item {
+        height: 100%;
+    }
+
+    #imageCarousel.owl-carousel .owl-item img {
+        height: 100%;
+        object-fit: cover;
+    }
+
+}
+
+.breadcrump-wrapper {
+    position: absolute;
+    z-index: 2;
+    bottom: 30%;
+    left: 15%;
+}
+
+.breadcrump-heading {
+    color: #fff;
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.apply-new-btn {
+    padding: 16px 36px;
+    font-size: 13px;
+    letter-spacing: 0.74px;
+    background-color: #004a8f;
+    background-image: linear-gradient(to right, #004a8f, #004a8f, #0779e2, #004a8f);
+    border: 0;
+    color: #fff;
+    transition: all 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
+    border-radius: 50px;
+    line-height: 15px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    outline: none;
+    background-size: 300% 100%;
+}
+
+.apply-new-btn:hover {
+    background-position: 100% 0;
+    -webkit-transition: all 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
+    transition: all 0.4s cubic-bezier(0.65, 0.05, 0.36, 1);
+    color: #fff;
+}
+
+.apply-new-btn:focus {
+    color: #fff;
+    box-shadow: none;
+}
+
+.apply-new-btn i {
+    font-size: 18px;
+}
+
+.hours-card {
+    width: 400px;
+    /* margin: 50px auto; */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border: none;
+    z-index: 99;
+    top: 34%;
+    right: 10%;
+}
+
+.hours-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: linear-gradient(to right, #4b6cb7, #182848);
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.5rem;
+    border-bottom: none;
+}
+
+.hours-item {
+    padding: 9px 44px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.hours-item:last-child {
+    border-bottom: none;
+}
+
+.hours-item:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.hours-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    color: #4b6cb7;
+    min-width: 30px;
+    text-align: center;
+}
+
+.hours-content {
+    flex: 1;
+}
+
+.hours-day {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.hours-time {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.closed-item {
+    background-color: white;
+}
+
+.closed-item .hours-icon {
+    color: #ff6347;
+}
