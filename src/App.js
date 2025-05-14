@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Header from './components/Header';
 import Footer from './components/Footer/Footer';
-import Index from './components/SchoolsAndColleges/Index';
+import CollegePage from './components/SchoolsAndColleges/CollegePage';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/schoolsandcolleges" element={<Index />} />
+        <Route path="/schoolsandcolleges/:slug" element={<CollegePage />} />
       </Routes>
       <Footer />
     </Router>

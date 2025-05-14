@@ -1,28 +1,22 @@
 import './BannerSection.css';
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import axios from 'axios';
 
 const BannerSection = () => {
-  const location = useLocation();
+  const { slug } = useParams();
   const [pageConfig, setPageConfig] = useState({
-    heading: 'Chettinad College of Nursing',
-    firstBtn: '<i class="fa fa-globe"></i> Apply Online',
-    firstLink: 'https://admission.care.edu.in/',
-    secondBtn: '<i class="fa fa-phone"></i> For Admission',
-    secondLink: 'tel:8447892022',
-    bannerImages: [
-      '/chettinad-react/assets/images/nursing/nursing-new-01.webp',
-      '/chettinad-react/assets/images/nursing/nursing-new-02.webp',
-      '/chettinad-react/assets/images/nursing/nursing-new-03.webp',
-      '/chettinad-react/assets/images/nursing/nursing-new-04.webp',
-      '/chettinad-react/assets/images/nursing/nursing-new-05.webp',
-      '/chettinad-react/assets/images/nursing/nursing-new-06.webp',
-      '/chettinad-react/assets/images/nursing/nursing-new-07.webp',
-    ]
+    heading: '',
+    firstBtn: '',
+    firstLink: '',
+    secondBtn: '',
+    secondLink: '',
+    bannerImages: []
   });
+  const [loading, setLoading] = useState(true);
 
   // Settings for the slider
   const sliderSettings = {
@@ -37,95 +31,57 @@ const BannerSection = () => {
   };
 
   useEffect(() => {
-    const pathname = location.pathname;
-    const pathParts = pathname.split('/').filter(part => part !== '');
-    const lastTwo = pathParts.slice(-2).join('/');
-    
-    let config = {
-      heading: 'Chettinad College of Nursing',
-      firstBtn: '<i class="fa fa-globe"></i> Apply Online',
-      firstLink: 'https://admission.care.edu.in/',
-      secondBtn: '<i class="fa fa-phone"></i> For Admission',
-      secondLink: 'tel:8447892022',
-      bannerImages: [
-        '/chettinad-react/assets/images/nursing/nursing-new-01.webp',
-        '/chettinad-react/assets/images/nursing/nursing-new-02.webp',
-        '/chettinad-react/assets/images/nursing/nursing-new-03.webp',
-        '/chettinad-react/assets/images/nursing/nursing-new-04.webp',
-        '/chettinad-react/assets/images/nursing/nursing-new-05.webp',
-        '/chettinad-react/assets/images/nursing/nursing-new-06.webp',
-        '/chettinad-react/assets/images/nursing/nursing-new-07.webp',
-      ]
+    const fetchCollegeData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}`);
+        const data = response.data;
+        
+        // Transform the API data to match your component's expected format
+        const bannerData = data.banner || {};
+        const buttons = bannerData.buttons || [];
+        
+        setPageConfig({
+          heading: data.name || bannerData.heading || 'Chettinad College',
+          firstBtn: buttons[0]?.text || '<i className="fa fa-globe"></i> Apply Online',
+          firstLink: buttons[0]?.link || 'https://admission.care.edu.in/',
+          secondBtn: buttons[1]?.text || '<i className="fa fa-phone"></i> For Admission',
+          secondLink: buttons[1]?.link || 'tel:8447892022',
+          bannerImages: bannerData.images || [
+            '/storage/default-banner.jpg' // Fallback default image
+          ]
+        });
+      } catch (error) {
+        console.error('Error fetching college data:', error);
+        // Set fallback data
+        setPageConfig({
+          heading: 'Chettinad College',
+          firstBtn: '<i className="fa fa-globe"></i> Apply Online',
+          firstLink: 'https://admission.care.edu.in/',
+          secondBtn: '<i className="fa fa-phone"></i> For Admission',
+          secondLink: 'tel:8447892022',
+          bannerImages: ['/storage/default-banner.jpg']
+        });
+      } finally {
+        setLoading(false);
+      }
     };
 
-    switch (lastTwo) {
-      case 'alumini/about':
-        config = {
-          heading: 'ALASCA (Alumni Association of CARE)',
-          firstBtn: 'Register Now',
-          firstLink: '/chettinad-react/alumini/registration',
-          secondBtn: 'Feedback Form',
-          secondLink: '/chettinad-react/alumini/feedback',
-          bannerImages: [
-            '/chettinad-react/assets/images/graduation-new.webp',
-            '/chettinad-react/assets/images/graduation-new2.png',
-          ]
-        };
-        break;
-      case 'pharma_science/about':
-      case 'pharma_science/student-life':
-        config = {
-          ...config,
-          heading: 'School of Pharmaceutical Sciences',
-          bannerImages: ['/chettinad-react/assets/images/pharma-banner.jpg']
-        };
-        break;
-      case 'physiotherapy/about':
-      case 'physiotherapy/student-life':
-        config = {
-          ...config,
-          heading: 'School of Physiotherapy',
-          bannerImages: ['/chettinad-react/assets/images/pysio-banner.jpg']
-        };
-        break;
-      case 'about-us/library':
-      case 'about-us/policy':
-      case 'about-us/collection':
-      case 'about-us/e-resources':
-      case 'about-us/open_access':
-        config = {
-          ...config,
-          heading: 'Central Library',
-          bannerImages: ['/chettinad-react/assets/images/lib-ban.jpg']
-        };
-        break;
-      default:
-        break;
-    }
+    fetchCollegeData();
+  }, [slug]);
 
-    setPageConfig(config);
-  }, [location.pathname]);
-
-  const shouldShowButtons = ![
-    'about-us/library',
-    'about-us/policy',
-    'about-us/collection',
-    'about-us/e-resources',
-    'about-us/open_access',
-    'alumini/about'
-  ].some(path => location.pathname.includes(path));
-
-  const shouldShowHoursCard = [
-    'about-us/library',
-    'about-us/policy'
-  ].some(path => location.pathname.includes(path));
+  if (loading) {
+    return <div className="text-center py-5">Loading banner...</div>;
+  }
 
   return (
     <section className="breadcrump_section">
       <Slider {...sliderSettings} className="banner-slider">
         {pageConfig.bannerImages.map((img, index) => (
           <div key={index} className="banner-slide">
-            <img src={img} alt={`Banner ${index + 1}`} />
+            <img 
+              src={process.env.REACT_APP_API_URL + '/public' + img} 
+              alt={`Banner ${index + 1}`}
+            />
           </div>
         ))}
       </Slider>
@@ -133,52 +89,25 @@ const BannerSection = () => {
       <div className="breadcrump-wrapper">
         <h4 className="breadcrump-heading">{pageConfig.heading}</h4>
         
-        {shouldShowButtons && (
+        {(pageConfig.firstLink && pageConfig.secondLink) && (
           <>
-            <a href={pageConfig.firstLink} target="_blank" rel="noopener noreferrer" className="btn apply-new-btn" dangerouslySetInnerHTML={{ __html: pageConfig.firstBtn }} />
-            <a href={pageConfig.secondLink} target="_blank" rel="noopener noreferrer" className="btn ms-3 apply-new-btn" dangerouslySetInnerHTML={{ __html: pageConfig.secondBtn }} />
+            <a 
+              href={pageConfig.firstLink} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn apply-new-btn" 
+              dangerouslySetInnerHTML={{ __html: pageConfig.firstBtn }} 
+            />
+            <a 
+              href={pageConfig.secondLink} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn ms-3 apply-new-btn" 
+              dangerouslySetInnerHTML={{ __html: pageConfig.secondBtn }} 
+            />
           </>
         )}
       </div>
-
-      {shouldShowHoursCard && (
-        <div className="card hours-card animate__animated animate__fadeInUp position-absolute">
-          <div className="card-header">
-            <i className="fa fa-clock-o me-2"></i> Working Hours
-          </div>
-          <div className="card-body p-0">
-            <div className="hours-item animate__animated animate__fadeIn animate__delay-1s">
-              <div className="hours-icon">
-                <i className="fa fa-calendar"></i>
-              </div>
-              <div className="hours-content">
-                <div className="hours-day">All working days</div>
-                <div className="hours-time">8:00 AM to 10:00 PM</div>
-              </div>
-            </div>
-            
-            <div className="hours-item animate__animated animate__fadeIn animate__delay-2s">
-              <div className="hours-icon">
-                <i className="fa fa-cog"></i>
-              </div>
-              <div className="hours-content">
-                <div className="hours-day">Sunday</div>
-                <div className="hours-time">9:00 AM to 4:00 PM</div>
-              </div>
-            </div>
-            
-            <div className="hours-item closed-item animate__animated animate__fadeIn animate__delay-3s">
-              <div className="hours-icon">
-                <i className="fa fa-calendar-times-o"></i>
-              </div>
-              <div className="hours-content">
-                <div className="hours-day">Public & Institution holidays</div>
-                <div className="hours-time">Closed</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
