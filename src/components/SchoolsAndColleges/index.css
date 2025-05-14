@@ -1717,3 +1717,10 @@
 
 /*Navigation Menu's End*/
 
+/* Find Our More CSS Start */
+
+.find-out-carousel .slick-slide div:nth-child(1) {
+    padding: 10px;
+}
+
+/* Find Our More CSS End */

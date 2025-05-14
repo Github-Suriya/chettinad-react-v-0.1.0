@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 const FacultyMembers = () => {
-  const [activeTab, setActiveTab] = useState('keyadmin');
+  const [activeAccordion, setActiveAccordion] = useState('keyadmin');
 
-  const facultyGroups = {
-    keyadmin: {
+  const facultyGroups = [
+    {
+      id: 'keyadmin',
       title: "Key Administrators",
       members: [
         {
@@ -22,7 +20,8 @@ const FacultyMembers = () => {
         }
       ]
     },
-    advisory: {
+    {
+      id: 'advisory',
       title: "Advisory Board",
       members: [
         {
@@ -62,37 +61,10 @@ const FacultyMembers = () => {
         }
       ]
     }
-  };
+  ];
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+  const toggleAccordion = (id) => {
+    setActiveAccordion(activeAccordion === id ? null : id);
   };
 
   return (
@@ -104,37 +76,42 @@ const FacultyMembers = () => {
           </div>
         </div>
         
-        <div className="faculty-tabs mb-4">
-          <button 
-            className={`faculty-tab ${activeTab === 'keyadmin' ? 'active' : ''}`}
-            onClick={() => setActiveTab('keyadmin')}
-          >
-            Key Administrators
-          </button>
-          <button 
-            className={`faculty-tab ${activeTab === 'advisory' ? 'active' : ''}`}
-            onClick={() => setActiveTab('advisory')}
-          >
-            Advisory Board
-          </button>
-        </div>
-
-        <Slider {...sliderSettings} className="faculty-slider">
-          {facultyGroups[activeTab].members.map((member, index) => (
-            <div key={index} className="faculty-slide">
-              <div className="single-faculty-item">
-                <img 
-                  className="img-fluid facluty-main-image" 
-                  loading="lazy" 
-                  src={member.image} 
-                  alt={member.name}
-                />
-                <h3 className="faculty-title">{member.name}</h3>
-                <p className="faculty-designation">{member.designation}</p>
+        <div className="faculty-accordion">
+          {facultyGroups.map((group) => (
+            <div className="accordion-item" key={group.id}>
+              <h2 className="accordion-header">
+                <button 
+                  className={`accordion-button ${activeAccordion === group.id ? '' : 'collapsed'}`}
+                  onClick={() => toggleAccordion(group.id)}
+                >
+                  {group.title}
+                </button>
+              </h2>
+              <div 
+                className={`accordion-collapse ${activeAccordion === group.id ? 'show' : ''}`}
+              >
+                <div className="accordion-body">
+                  <div className="row justify-content-center">
+                    {group.members.map((member, index) => (
+                      <div className="col-md-3 mb-3 col-10" key={index}>
+                        <div className="single-faculty-item">
+                          <img 
+                            className="img-fluid facluty-main-image" 
+                            loading="lazy" 
+                            src={member.image} 
+                            alt={member.name}
+                          />
+                          <h3 className="faculty-title">{member.name}</h3>
+                          <p className="faculty-designation">{member.designation}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
-        </Slider>
+        </div>
       </div>
     </section>
   );
