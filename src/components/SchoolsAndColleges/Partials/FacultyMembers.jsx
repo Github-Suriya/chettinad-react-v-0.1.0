@@ -1,70 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const FacultyMembers = () => {
-  const [activeAccordion, setActiveAccordion] = useState('keyadmin');
+  const { slug } = useParams();
+  const [activeAccordion, setActiveAccordion] = useState(null);
+  const [facultyData, setFacultyData] = useState({
+    title: 'Faculty Members',
+    groups: [],
+    itemsPerRow: 4, // Default to 4 items per row
+    loading: true
+  });
 
-  const facultyGroups = [
-    {
-      id: 'keyadmin',
-      title: "Key Administrators",
-      members: [
-        {
-          name: "Dr. Subbulakshmi S",
-          designation: "Principal",
-          image: "/chettinad-react/assets/images/principal.png"
-        },
-        {
-          name: "Prof. Yagajeyanthi M",
-          designation: "Vice Principal",
-          image: "/chettinad-react/assets/images/Prof-Yagajeyanthi-M.JPG"
+  useEffect(() => {
+    const fetchFacultyData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/faculty`);
+        const data = response.data;
+        
+        setFacultyData({
+          title: data.title || 'Faculty Members',
+          groups: data.groups || [],
+          itemsPerRow: data.items_per_row || 4,
+          loading: false
+        });
+        
+        // Set first group as active by default if exists
+        if (data.groups?.length > 0) {
+          setActiveAccordion(data.groups[0].id);
         }
-      ]
-    },
-    {
-      id: 'advisory',
-      title: "Advisory Board",
-      members: [
-        {
-          name: "Ar. Manit Rastogi",
-          designation: "Principal Architect",
-          image: "https://care.edu.in/wp-content/uploads/2020/07/Ar.-Manit-Rastogi.png"
-        },
-        {
-          name: "Ar. Peter Stutchbury",
-          designation: "Principal Architect",
-          image: "https://care.edu.in/wp-content/uploads/2020/07/Ar.-Peter-Stutchbury.png"
-        },
-        {
-          name: "Ar. SaroshPradhan",
-          designation: "Principal Architect",
-          image: "https://care.edu.in/wp-content/uploads/2020/07/Ar.-SaroshPradhan.png"
-        },
-        {
-          name: "Ar. Andy Rahman",
-          designation: "Principal Architect",
-          image: "https://care.edu.in/wp-content/uploads/2020/07/Ar.-Andy-Rahman.png"
-        },
-        {
-          name: "Ar. Sridhar",
-          designation: "Managing Director",
-          image: "https://care.edu.in/wp-content/uploads/2020/07/Ar.-Sridhar.png"
-        },
-        {
-          name: "Ar. Cheralathan K",
-          designation: "Principal Architect",
-          image: "https://care.edu.in/wp-content/uploads/2020/07/Ar.-Cheralathan-K.png"
-        },
-        {
-          name: "System Admin",
-          designation: "IT",
-          image: "/chettinad-react/assets/images/faculty-male-memberss-default.png"
-        }
-      ]
-    }
-  ];
+      } catch (error) {
+        console.error('Error fetching faculty data:', error);
+        setFacultyData({
+          title: 'Faculty Members',
+          groups: [],
+          itemsPerRow: 4,
+          loading: false
+        });
+      }
+    };
+
+    fetchFacultyData();
+  }, [slug]);
 
   const toggleAccordion = (id) => {
     setActiveAccordion(activeAccordion === id ? null : id);
+  };
+
+  if (facultyData.loading) {
+    return <div className="text-center py-5">Loading faculty data...</div>;
+  }
+
+  // Calculate column class based on items per row
+  const getColumnClass = () => {
+    const cols = 12 / facultyData.itemsPerRow;
+    return `col-md-${cols} mb-4 col-10`;
   };
 
   return (
@@ -72,33 +62,36 @@ const FacultyMembers = () => {
       <div className="container">
         <div className="row pb-5">
           <div className="col-12 wow fadeIn" data-wow-duration="2s">
-            <h4 className="theme-heading">Faculty Members</h4>
+            <h4 className="theme-heading">{facultyData.title}</h4>
           </div>
         </div>
         
         <div className="faculty-accordion">
-          {facultyGroups.map((group) => (
+          {facultyData.groups.map((group) => (
             <div className="accordion-item" key={group.id}>
               <h2 className="accordion-header">
                 <button 
                   className={`accordion-button ${activeAccordion === group.id ? '' : 'collapsed'}`}
                   onClick={() => toggleAccordion(group.id)}
+                  aria-expanded={activeAccordion === group.id}
+                  aria-controls={`collapse-${group.id}`}
                 >
                   {group.title}
                 </button>
               </h2>
               <div 
-                className={`accordion-collapse ${activeAccordion === group.id ? 'show' : ''}`}
+                id={`collapse-${group.id}`} 
+                className={`accordion-collapse collapse ${activeAccordion === group.id ? 'show' : ''}`}
               >
                 <div className="accordion-body">
                   <div className="row justify-content-center">
                     {group.members.map((member, index) => (
-                      <div className="col-md-3 mb-3 col-10" key={index}>
+                      <div className={getColumnClass()} key={index}>
                         <div className="single-faculty-item">
                           <img 
                             className="img-fluid facluty-main-image" 
                             loading="lazy" 
-                            src={member.image} 
+                            src={`${process.env.REACT_APP_API_URL}/public${member.image}`}
                             alt={member.name}
                           />
                           <h3 className="faculty-title">{member.name}</h3>

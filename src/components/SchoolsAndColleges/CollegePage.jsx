@@ -5,6 +5,8 @@ import OverviewSection from './Partials/OverviewSection';
 import './index.css';
 import PrincipalSpeakSection from './Partials/PrincipalSpeakSection';
 import LogoSection from './Partials/LogoSection';
+import FacultyMembers from './Partials/FacultyMembers';
+import FacilitiesSection from './Partials/FacilitiesSection';
 
 const CollegePage = () => {
   return (
@@ -14,6 +16,8 @@ const CollegePage = () => {
         <OverviewSection />
         <PrincipalSpeakSection />
         <LogoSection />
+        <FacultyMembers />
+        <FacilitiesSection />
     </div>
   );
 };

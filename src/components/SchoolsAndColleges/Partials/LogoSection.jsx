@@ -1,23 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const LogoSection = () => {
-  const logos = [
-    {
-      image: "/chettinad-react/assets/images/nursing-bottom-logo-1.jpg",
-      alt: "Tamilnadu Nurses and Midwives Council",
-      link: "https://care.edu.in/tamilnadu-nurses-and-midwives-council/"
-    },
-    {
-      image: "/chettinad-react/assets/images/nursing-bottom-logo-2.png",
-      alt: "Indian Nursing Council",
-      link: "https://care.edu.in/indian-nursing-council/"
-    }
-  ];
-
-  const settings = {
+  const { slug } = useParams();
+  const [logos, setLogos] = useState([]);
+  const [sliderSettings, setSliderSettings] = useState({
     dots: false,
     infinite: true,
     speed: 500,
@@ -35,17 +26,65 @@ const LogoSection = () => {
         }
       }
     ]
-  };
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLogoData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/logos`);
+        const data = response.data;
+        
+        setLogos(data.logos || []);
+        
+        // Update slider settings from API if available
+        if (data.slider_settings) {
+          setSliderSettings(prev => ({
+            ...prev,
+            ...data.slider_settings,
+            responsive: data.slider_settings.responsive || prev.responsive
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching logo data:', error);
+        // Fallback data
+        setLogos([
+          {
+            image: "/storage/default-logo-1.png",
+            alt: "Default Logo 1",
+            link: "#"
+          },
+          {
+            image: "/storage/default-logo-2.png",
+            alt: "Default Logo 2",
+            link: "#"
+          }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLogoData();
+  }, [slug]);
+
+  if (loading) {
+    return <div className="text-center py-4">Loading logos...</div>;
+  }
 
   return (
     <section className="logos_section py-4">
       <div className="container">
         <div className="row">
-          <Slider {...settings} className="logos-carousel">
+          <Slider {...sliderSettings} className="logos-carousel">
             {logos.map((logo, index) => (
               <div className="item" key={index}>
                 <a href={logo.link} target="_blank" rel="noopener noreferrer">
-                  <img src={logo.image} alt={logo.alt} className="img-fluid" />
+                  <img 
+                    src={`${process.env.REACT_APP_API_URL}/public${logo.image}`}
+                    alt={logo.alt} 
+                    className="img-fluid"
+                  />
                 </a>
               </div>
             ))}
