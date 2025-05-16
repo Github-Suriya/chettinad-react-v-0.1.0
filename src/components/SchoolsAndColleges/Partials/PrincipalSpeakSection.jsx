@@ -1,23 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const PrincipalSpeakSection = () => {
+  const { slug } = useParams();
   const [showMore, setShowMore] = useState(false);
-  const stats = [
-    { value: 1000, suffix: "+", title: "Graduates" },
-    { title: "INC Approved" },
-    { value: 3, suffix: "+", title: "Courses" },
-    { value: 5, suffix: "+", title: "Specialisation" }
-  ];
+  const [principalData, setPrincipalData] = useState({
+    name: 'Loading...',
+    designation: 'Principal',
+    image: '/storage/default-principal.png',
+    content: 'Loading principal message...',
+    extendedContent: '',
+    stats: [],
+    position: 'left' // 'left' or 'right'
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPrincipalData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/principal`);
+        const data = response.data;
+        
+        setPrincipalData({
+          name: data.name || 'Principal Name',
+          designation: data.designation || 'Principal',
+          image: data.image || '/storage/default-principal.png',
+          content: data.content || 'Principal message content',
+          extendedContent: data.extended_content || '',
+          stats: data.stats || [],
+          position: data.position || 'left'
+        });
+      } catch (error) {
+        console.error('Error fetching principal data:', error);
+        setPrincipalData({
+          name: 'Dr. Subbulakshmi S',
+          designation: 'Principal',
+          image: '/storage/default-principal.png',
+          content: 'Welcome to our college...',
+          extendedContent: '',
+          stats: [
+            { value: 1000, suffix: "+", title: "Graduates" },
+            { title: "INC Approved" },
+            { value: 3, suffix: "+", title: "Courses" },
+            { value: 5, suffix: "+", title: "Specialisation" }
+          ],
+          position: 'left'
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrincipalData();
+  }, [slug]);
 
   const toggleReadMore = () => {
     setShowMore(!showMore);
+  };
+
+  if (loading) {
+    return <div className="text-center py-5">Loading principal section...</div>;
+  }
+
+  // Function to safely render HTML content
+  const createMarkup = (html) => {
+    return { __html: html || '' };
   };
 
   return (
     <section className="fact_section pt_80 pb_80" id="principal">
       <div className="container-fluid">
         <div className="row justify-content-evenly">
-          <div className="col-lg-5">
+          {/* Principal Column - position changes based on data */}
+          <div className={`col-lg-5 order-lg-${principalData.position === 'left' ? '1' : '2'}`}>
             <div className="fact-left">
               <div className="fact-widget-container">
                 <div className="fact-image-box-wrapper">
@@ -25,13 +81,13 @@ const PrincipalSpeakSection = () => {
                     <img 
                       className="img-fluid" 
                       loading="lazy" 
-                      src="/chettinad-react/assets/images/principal.png" 
-                      alt="principal" 
+                      src={`${process.env.REACT_APP_API_URL}/public${principalData.image}`}
+                      alt={principalData.name}
                     />
                   </figure>
                   <div className="fact-image-box-content">
-                    <h3 className="fact-image-box-title">Dr. Subbulakshmi S</h3>
-                    <p className="fact-image-box-description">Principal</p>
+                    <h3 className="fact-image-box-title">{principalData.name}</h3>
+                    <p className="fact-image-box-description">{principalData.designation}</p>
                   </div>
                 </div>
               </div>
@@ -39,7 +95,7 @@ const PrincipalSpeakSection = () => {
             <div className="row d-none d-lg-flex">
               <div className="col-6">
                 <div className="fact-detail-left">
-                  {stats.slice(0, 2).map((stat, index) => (
+                  {principalData.stats.slice(0, 2).map((stat, index) => (
                     <div className="fact-single-item" key={index}>
                       <div className="fact-single-wrapper">
                         <div className="fact-counter">
@@ -59,7 +115,7 @@ const PrincipalSpeakSection = () => {
               </div>
               <div className="col-6">
                 <div className="fact-detail-right">
-                  {stats.slice(2).map((stat, index) => (
+                  {principalData.stats.slice(2).map((stat, index) => (
                     <div className="fact-single-item" key={index}>
                       <div className="fact-single-wrapper">
                         <div className="fact-counter">
@@ -79,51 +135,37 @@ const PrincipalSpeakSection = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-5 row">
+
+          {/* Content Column */}
+          <div className={`col-lg-5 order-lg-${principalData.position === 'left' ? '2' : '1'} row`}>
             <div className="fact-content-heading read-more-section">
               <h2 className="mb-3">Principal Speak</h2>
-              <p>Welcome to the Chettinad College of Nursing (CCN) at Chettinad Academy of Research and Education (Deemed to be a University).</p>
-              <p>Committed to excellence in nursing with a strong clinical environment and academic excellence in mutual partnership with our teaching hospital, we provide robust foundation for the development of students as capable health care professionals both in India and globally.</p>
-              
-              {showMore && (
-                <div className="more-text">
-                  <p>Research led teaching, learning and practice in state-of-the-art facilities provide the best learning experience. The wonderful green atmosphere with the central library facilitates students access to study opportunities. Through an interdisciplinary approach, we continuously expand professional boundaries and prepare exceptional graduates.</p>
-                  <p>Merit scholarship is offered.</p>
-                  <p>Our undergraduate programs are:</p>
-                  <ol className="fact-content-list">
-                    <li><a href="https://admission.care.edu.in/kelambakkam" target="_blank" rel="noopener noreferrer">BSc Nursing</a>, 4 years (after 10+2)</li>
-                    <li><a href="https://admission.care.edu.in/kelambakkam" target="_blank" rel="noopener noreferrer">Post Basic BSc Nursing</a>, 2years (after diploma nursing)</li>
-                  </ol>
-                  <p>Our postgraduate programs are co-designed with speciality to meet our community needs.</p>
-                  <p>Our programs include:</p>
-                  <p><a href="https://admission.care.edu.in/kelambakkam" target="_blank" rel="noopener noreferrer">Master of Nursing</a></p>
-                  <ol className="fact-content-list">
-                    <li>Medical-Surgical Nursing</li>
-                    <li>Obstetrics and Gynaecology Nursing</li>
-                    <li>Child Health Nursing (Pediatric)</li>
-                    <li>Community Health Nursing</li>
-                    <li>Mental Health (Psychiatric) Nursing</li>
-                  </ol>
-                  <p>Incorporating contemporary practice, they are taught by both our academic faculty and experts. Students interested in research can study through a PhD program. Higher degree students undertake a broad range of nursing and healthrelated research.</p>
-                  <p>DR.SUBBULAKSHMI.S <br /> Principal <br /> Chettinad College of Nursing</p>
-                </div>
+              <div dangerouslySetInnerHTML={createMarkup(principalData.content)} />
+              <div dangerouslySetInnerHTML={createMarkup(principalData.extendedContent)}></div>
+              {principalData.extendedContent && (
+                <>
+                  {showMore && (
+                    <div className="more-text" dangerouslySetInnerHTML={createMarkup(principalData.extendedContent)} />
+                  )}
+                  <button className="btn-one btn-smaller read-more mb-3 readmore-mobile" onClick={toggleReadMore}>
+                    <span className="txt">{showMore ? 'Read Less' : 'Read More'}</span>
+                  </button>
+                </>
               )}
-              
-              <button className="btn-one btn-smaller read-more mb-3 readmore-mobile" onClick={toggleReadMore}>
-                <span className="txt">{showMore ? 'Read Less' : 'Read More'}</span>
-              </button>
             </div>
           </div>
-          <div className="row d-flex d-lg-none">
+
+          {/* Mobile Stats */}
+          <div className="row d-flex d-lg-none order-lg-3">
             <div className="col-6">
               <div className="fact-detail-left">
-                {stats.slice(0, 2).map((stat, index) => (
+                {principalData.stats.slice(0, 2).map((stat, index) => (
                   <div className="fact-single-item" key={index}>
                     <div className="fact-single-wrapper">
                       <div className="fact-counter">
                         {stat.value && (
                           <div className="fact-counter-number-wrapper">
-                            <span className="fact-counter-number-prefix"></span>
+                              <span className="fact-counter-number-prefix"></span>
                             <span className="fact-counter-number">{stat.value}</span>
                             <span className="fact-counter-number-suffix">{stat.suffix}</span>
                           </div>
@@ -137,13 +179,13 @@ const PrincipalSpeakSection = () => {
             </div>
             <div className="col-6">
               <div className="fact-detail-right">
-                {stats.slice(2).map((stat, index) => (
+                {principalData.stats.slice(2).map((stat, index) => (
                   <div className="fact-single-item" key={index}>
                     <div className="fact-single-wrapper">
                       <div className="fact-counter">
                         {stat.value && (
                           <div className="fact-counter-number-wrapper">
-                            <span className="fact-counter-number-prefix"></span>
+                              <span className="fact-counter-number-prefix"></span>
                             <span className="fact-counter-number">{stat.value}</span>
                             <span className="fact-counter-number-suffix">{stat.suffix}</span>
                           </div>

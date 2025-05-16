@@ -1,53 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const LatestNewsSection = () => {
-  const newsItems = [
-    { text: "Online Application", link: "https://admission.care.edu.in/" },
-    { text: "Latest News", link: "#" },
-    { text: "News Options Demo Two", link: "#" },
-    { text: "News Options Demo Three", link: "#" }
-  ];
+  const { slug } = useParams();
+  const [newsData, setNewsData] = useState({
+    title: 'Latest News',
+    logo: '/storage/default-logo.png',
+    items: [],
+    loading: true
+  });
+
+  useEffect(() => {
+    const fetchNewsData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/news`);
+        const data = response.data;
+        
+        setNewsData({
+          title: data.title || 'Latest News',
+          logo: data.logo || '/storage/default-logo.png',
+          items: data.items || [],
+          loading: false
+        });
+      } catch (error) {
+        console.error('Error fetching news data:', error);
+        setNewsData({
+          title: 'Latest News',
+          logo: '/storage/default-logo.png',
+          items: [
+            { text: "Online Application", link: "https://admission.care.edu.in/", target: "_blank" },
+            { text: "Latest News", link: "#", target: "_self" }
+          ],
+          loading: false
+        });
+      }
+    };
+
+    fetchNewsData();
+  }, [slug]);
+
+  if (newsData.loading) {
+    return <div className="text-center py-3">Loading news...</div>;
+  }
 
   return (
     <section className="latest_news_section py-3">
-      {/* Hidden container with owl-carousel (commented out as it was d-none in original) */}
-      <div className="container d-none">
-        <div className="trending-carousel-container">
-          <div className="trending-label">Latest News</div>
-          <div className="owl-carousel trending-carousel">
-            {newsItems.map((item, index) => (
-              <div className="item" key={index}>
-                <a href={item.link} target="_blank" rel="noopener noreferrer">{item.text}</a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Visible marquee section */}
       <div className="container">
         <div className="row align-items-center">
           <div className="col-md-2 col-5 p-0 p-md-auto">
             <img 
-              src="/chettinad-react/assets/images/college-of-nursing-logo.png" 
-              alt="course-logo" 
-              className="img-fluid" 
+              src={`${process.env.REACT_APP_API_URL}/public${newsData.logo}`}
+              alt="College logo" 
+              className="img-fluid"
             />
           </div>
           <div className="col-md-10 col-7 p-0 p-md-auto">
             <div className="trending-carousel-container d-flex align-items-center flex-column flex-md-row p-0 p-md-auto">
-              <div className="trending-label me-3 d-block d-md-none">Latest News</div>
+              <div className="trending-label me-3 d-block d-md-none">{newsData.title}</div>
               
-              {/* React implementation of marquee */}
               <div className="marquee-container">
                 <div 
                   className="marquee-content"
                   onMouseEnter={e => e.currentTarget.style.animationPlayState = 'paused'}
                   onMouseLeave={e => e.currentTarget.style.animationPlayState = 'running'}
                 >
-                  {newsItems.map((item, index) => (
+                  {newsData.items.map((item, index) => (
                     <span className="me-5" key={index}>
-                      <a href={item.link} target="_blank" rel="noopener noreferrer">
+                      <a href={item.link} target={item.target || "_blank"} rel="noopener noreferrer">
                         {item.text}
                       </a>
                     </span>
@@ -55,7 +75,7 @@ const LatestNewsSection = () => {
                 </div>
               </div>
               
-              <div className="trending-label me-3 d-none d-md-block">Latest News</div>
+              <div className="trending-label me-3 d-none d-md-block">{newsData.title}</div>
             </div>
           </div>
         </div>

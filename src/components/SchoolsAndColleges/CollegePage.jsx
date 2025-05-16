@@ -3,7 +3,8 @@ import BannerSection from './Partials/BannerSection';
 import LatestNewsSection from './Partials/LatestNewsSection';
 import OverviewSection from './Partials/OverviewSection';
 import './index.css';
-import DynamicFaqSection from '../DynamicSections/DynamicFaqSection';
+import PrincipalSpeakSection from './Partials/PrincipalSpeakSection';
+import LogoSection from './Partials/LogoSection';
 
 const CollegePage = () => {
   return (
@@ -11,6 +12,8 @@ const CollegePage = () => {
         <BannerSection />
         <LatestNewsSection />
         <OverviewSection />
+        <PrincipalSpeakSection />
+        <LogoSection />
     </div>
   );
 };

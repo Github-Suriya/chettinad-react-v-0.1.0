@@ -1,10 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const OverviewSection = () => {
+  const { slug } = useParams();
   const [showMore, setShowMore] = useState(false);
+  const [overviewData, setOverviewData] = useState({
+    content: '',
+    extendedContent: '',
+    image: '/storage/default-college.jpg'
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOverviewData = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}`);
+        const apiData = response.data;
+        
+        // Find overview section in the sections array
+        const overviewSection = apiData.sections.overview;
+        
+        setOverviewData({
+          content: overviewSection?.overview_content || 'No overview content available',
+          extendedContent: overviewSection?.extended_content || '',
+          image: overviewSection?.overview_image || '/storage/default-college.jpg'
+        });
+      } catch (error) {
+        console.error('Error fetching overview data:', error);
+        setOverviewData({
+          content: 'Error loading overview content',
+          extendedContent: '',
+          image: '/storage/default-college.jpg'
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOverviewData();
+  }, [slug]);
 
   const toggleReadMore = () => {
     setShowMore(!showMore);
+  };
+
+  if (loading) {
+    return <div className="text-center py-5">Loading overview...</div>;
+  }
+
+  // Function to safely render HTML content
+  const createMarkup = (html) => {
+    return { __html: html || '' };
   };
 
   return (
@@ -17,25 +64,35 @@ const OverviewSection = () => {
         </div>
         <div className="row">
           <div className="col-lg-7 read-more-section text-center text-md-start">
-            <p className="wow fadeIn" data-wow-duration="2s">
-              Chettinad College of Nursing is a constituent college of Chettinad Academy of Research and Education (Deemed to be University under section 3 of the UGC Act 1956) recognized by the Indian Nursing Council, Delhi and Tamil Nadu Nurses and Midwives Council, Chennai.
-            </p>
-            <p className="wow fadeIn" data-wow-duration="2s" data-wow-delay="0.2s">
-              Chettinad College of Nursing was established with the mission to prepare nurses with global standards for local and global placements. The Nursing programs offered to implement a curriculum based on the syllabus provided by the Indian Nursing Council to establish uniform standards of Nursing Education. The standardized curriculum provides a broad-based education within the academic framework intended for the development of critical thinking skills, competencies, and standards required for the practice of professional nursing and midwifery as envisaged in National Health Policy.
-            </p>
-            <div className="more-text" style={{ display: showMore ? 'block' : 'none' }}>
-              <p>The curriculum is further enriched with value-added courses to prepare our graduates to become exemplary citizens by adhering to the code of ethics and professional conduct at all times in fulfilling personal, social and professional obligations so as to respond to national aspirations.</p>
-              <p>The placement and career counseling cell, Chettinad Academy of Research and Education ensures 100% assistance for employment through career counseling, in-house interviews and campus interviews.</p>
-            </div>
-            <button className="btn-one btn-smaller read-more mb-3" onClick={toggleReadMore}>
-              <span className="txt">{showMore ? 'Read Less' : 'Read More'}</span>
-            </button>
+            <div 
+              className="wow fadeIn" 
+              data-wow-duration="2s"
+              dangerouslySetInnerHTML={createMarkup(overviewData.content)}
+            />
+            
+            {overviewData.extendedContent && (
+              <>
+                <div 
+                  className="more-text wow fadeIn" 
+                  data-wow-duration="2s" 
+                  data-wow-delay="0.2s"
+                  style={{ display: showMore ? 'block' : 'none' }}
+                  dangerouslySetInnerHTML={createMarkup(overviewData.extendedContent)}
+                />
+                <button className="btn-one btn-smaller read-more mb-3" onClick={toggleReadMore}>
+                  <span className="txt">{showMore ? 'Read Less' : 'Read More'}</span>
+                </button>
+              </>
+            )}
           </div>
           <div className="col-lg-5 wow fadeIn" data-wow-duration="2s">
             <img 
-              src="/chettinad-react/assets/images/nursing/nursing-new-02.webp" 
-              alt="over-view-img" 
+              src={`${process.env.REACT_APP_API_URL}/public${overviewData.image}`}
+              alt="College overview" 
               className="img-fluid mb-3" 
+              onError={(e) => {
+                e.target.src = `${process.env.REACT_APP_API_URL}/storage/default-college.jpg`;
+              }}
             />
           </div>
         </div>
