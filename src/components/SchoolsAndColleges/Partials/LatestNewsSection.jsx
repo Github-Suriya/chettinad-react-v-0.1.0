@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../api';
 import { useParams } from 'react-router-dom';
 
 const LatestNewsSection = () => {
@@ -14,7 +14,7 @@ const LatestNewsSection = () => {
   useEffect(() => {
     const fetchNewsData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/news`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/news`);
         const data = response.data;
         
         setNewsData({

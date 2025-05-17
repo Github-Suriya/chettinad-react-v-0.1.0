@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -29,7 +29,7 @@ const FacilitiesSection = () => {
   useEffect(() => {
     const fetchFacilitiesData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/facilities`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/facilities`);
         const data = response.data;
         
         setFacilitiesData({

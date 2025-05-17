@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../api';
 
 const StudentLifeSection = () => {
     const { slug } = useParams();
@@ -11,7 +11,7 @@ const StudentLifeSection = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/student-life`);
+                const response = await api.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/student-life`);
                 setSectionData(response.data);
             } catch (err) {
                 setError(err.message);

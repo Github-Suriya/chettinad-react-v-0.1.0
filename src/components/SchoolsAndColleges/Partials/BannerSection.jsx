@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import axios from 'axios';
+import api from '../../../api';
 
 const BannerSection = () => {
   const { slug } = useParams();
@@ -33,7 +33,7 @@ const BannerSection = () => {
   useEffect(() => {
     const fetchCollegeData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}`);
         const data = response.data;
         
         // Transform the API data to match your component's expected format

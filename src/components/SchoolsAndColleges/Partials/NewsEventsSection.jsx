@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import axios from 'axios';
+import api from '../../../api';
 
 const NewsEventsSection = () => {
   const { slug } = useParams();
@@ -16,7 +16,7 @@ const NewsEventsSection = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/news-events`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/news-events`);
         setSectionData(response.data);
         console.log('News and Events Data:', response.data.items);
       } catch (err) {

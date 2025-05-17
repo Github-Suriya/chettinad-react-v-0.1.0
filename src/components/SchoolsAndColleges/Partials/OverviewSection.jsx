@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../api';
 import { useParams } from 'react-router-dom';
 
 const OverviewSection = () => {
@@ -15,7 +15,7 @@ const OverviewSection = () => {
   useEffect(() => {
     const fetchOverviewData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}`);
         const apiData = response.data;
         
         // Find overview section in the sections array

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import HappeningsAtChettinad from "./Carousel/HappeningsAtChettinad";
 import FactCounter from "./Utilities/FactCounter";
-import axios from 'axios';
+import api from '../api';
 import DynamicContentSections from './DynamicSections/DynamicContentSections';
 import DynamicImgCarousel from './DynamicSections/DynamicImgCarousel';
 import DynamicDepartmentsSection from './DynamicSections/DynamicDepartmentsSection';
@@ -25,7 +25,7 @@ const Home = () => {
       useEffect(() => {
         const fetchBannerData = async () => {
           try {
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/menus/banner`);
+            const response = await api.get(`${process.env.REACT_APP_API_URL}/api/menus/banner`);
             setBannerData({
               videoUrl: response.data.videoUrl,
               title: response.data.title,
