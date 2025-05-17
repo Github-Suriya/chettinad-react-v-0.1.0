@@ -1724,3 +1724,19 @@
 }
 
 /* Find Our More CSS End */
+
+.breadcrump_section {
+    height: 70vh;
+}
+
+.logos-carousel .slick-slide img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 576px) {
+    .breadcrump_section {
+        height: 50vh;
+    }
+}

@@ -41,7 +41,11 @@ const LatestNewsSection = () => {
   }, [slug]);
 
   if (newsData.loading) {
-    return <div className="text-center py-3">Loading news...</div>;
+    return <></>;
+  }
+
+  if (newsData.items.length === 0) {
+    return <></>;
   }
 
   return (

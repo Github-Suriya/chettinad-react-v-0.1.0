@@ -46,9 +46,7 @@ const BannerSection = () => {
           firstLink: buttons[0]?.link || 'https://admission.care.edu.in/',
           secondBtn: buttons[1]?.text || '<i className="fa fa-phone"></i> For Admission',
           secondLink: buttons[1]?.link || 'tel:8447892022',
-          bannerImages: bannerData.images || [
-            '/storage/default-banner.jpg' // Fallback default image
-          ]
+          bannerImages: bannerData.images || []
         });
       } catch (error) {
         console.error('Error fetching college data:', error);
@@ -70,7 +68,11 @@ const BannerSection = () => {
   }, [slug]);
 
   if (loading) {
-    return <div className="text-center py-5">Loading banner...</div>;
+    return <></>;
+  }
+
+  if (pageConfig.bannerImages.length === 0) {
+    return <></>;
   }
 
   return (

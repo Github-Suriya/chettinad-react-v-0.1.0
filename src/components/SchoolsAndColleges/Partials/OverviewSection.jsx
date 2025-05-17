@@ -46,7 +46,11 @@ const OverviewSection = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-5">Loading overview...</div>;
+    return <></>;
+  }
+
+  if (overviewData.content === 'No overview content available') {
+    return <></>;
   }
 
   // Function to safely render HTML content

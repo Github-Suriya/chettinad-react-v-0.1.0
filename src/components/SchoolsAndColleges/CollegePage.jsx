@@ -9,6 +9,7 @@ import FacultyMembers from './Partials/FacultyMembers';
 import FacilitiesSection from './Partials/FacilitiesSection';
 import StudentLifeSection from './Partials/StudentLifeSection';
 import FindOutMoreSection from './Partials/FindOutMoreSection';
+import NewsEventsSection from './Partials/NewsEventsSection';
 
 const CollegePage = () => {
   return (
@@ -21,6 +22,7 @@ const CollegePage = () => {
         <FacultyMembers />
         <FacilitiesSection />
         <StudentLifeSection />
+        <NewsEventsSection />
         <FindOutMoreSection />
     </div>
   );

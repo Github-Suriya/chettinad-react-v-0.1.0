@@ -23,13 +23,13 @@ const PrincipalSpeakSection = () => {
         const data = response.data;
         
         setPrincipalData({
-          name: data.name || 'Principal Name',
-          designation: data.designation || 'Principal',
-          image: data.image || '/storage/default-principal.png',
-          content: data.content || 'Principal message content',
-          extendedContent: data.extended_content || '',
+          name: data.name,
+          designation: data.designation,
+          image: data.image,
+          content: data.content || [],
+          extendedContent: data.extended_content,
           stats: data.stats || [],
-          position: data.position || 'left'
+          position: data.position
         });
       } catch (error) {
         console.error('Error fetching principal data:', error);
@@ -60,7 +60,11 @@ const PrincipalSpeakSection = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-5">Loading principal section...</div>;
+    return <></>;
+  }
+
+  if (principalData.content.length === 0) {
+    return <></>;
   }
 
   // Function to safely render HTML content

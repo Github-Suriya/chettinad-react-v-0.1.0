@@ -23,9 +23,11 @@ const StudentLifeSection = () => {
         fetchData();
     }, [slug]);
 
-    if (loading) return <div className="text-center py-5">Loading...</div>;
+    if (loading) return <></>;
     if (error) return <div className="text-center py-5 text-danger">Error: {error}</div>;
-    if (!sectionData) return null;
+    if (sectionData.content.length === 0) {
+        return <></>;
+    }
 
     return (
         <section className="student_life_section pt_80 pb_80" id="student-life">

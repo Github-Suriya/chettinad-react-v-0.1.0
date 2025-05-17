@@ -48,7 +48,11 @@ const FacultyMembers = () => {
   };
 
   if (facultyData.loading) {
-    return <div className="text-center py-5">Loading faculty data...</div>;
+    return <></>;
+  }
+
+  if (facultyData.groups.length === 0) {
+    return <></>;
   }
 
   // Calculate column class based on items per row

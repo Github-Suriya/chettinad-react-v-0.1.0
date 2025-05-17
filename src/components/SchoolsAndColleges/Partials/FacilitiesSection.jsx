@@ -51,7 +51,11 @@ const FacilitiesSection = () => {
   }, [slug]);
 
   if (facilitiesData.loading) {
-    return <div className="text-center py-5">Loading facilities...</div>;
+    return <></>;
+  }
+
+  if (facilitiesData.items.length === 0) {
+    return <></>;
   }
 
   return (
