@@ -7,6 +7,8 @@ import PrincipalSpeakSection from './Partials/PrincipalSpeakSection';
 import LogoSection from './Partials/LogoSection';
 import FacultyMembers from './Partials/FacultyMembers';
 import FacilitiesSection from './Partials/FacilitiesSection';
+import StudentLifeSection from './Partials/StudentLifeSection';
+import FindOutMoreSection from './Partials/FindOutMoreSection';
 
 const CollegePage = () => {
   return (
@@ -18,6 +20,8 @@ const CollegePage = () => {
         <LogoSection />
         <FacultyMembers />
         <FacilitiesSection />
+        <StudentLifeSection />
+        <FindOutMoreSection />
     </div>
   );
 };
