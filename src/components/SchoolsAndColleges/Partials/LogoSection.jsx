@@ -34,20 +34,53 @@ const LogoSection = () => {
       try {
         const response = await api.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/logos`);
         const data = response.data;
-        
+
         setLogos(data.logos || []);
-        
-        // Update slider settings from API if available
-        if (data.slider_settings) {
+
+        if (data.settings) {
+          // Convert string values to proper types
+          const {
+            dots,
+            speed,
+            arrows,
+            autoplay,
+            infinite,
+            slidesToShow,
+            autoplaySpeed,
+            slidesToScroll,
+            responsive
+          } = data.settings;
+
+          const convertedSettings = {
+            dots: dots === '1',
+            speed: Number(speed),
+            arrows: arrows === '1',
+            autoplay: autoplay === '1',
+            infinite: infinite === '1',
+            slidesToShow: Number(slidesToShow),
+            autoplaySpeed: Number(autoplaySpeed),
+            slidesToScroll: Number(slidesToScroll),
+            responsive: Array.isArray(responsive)
+              ? responsive.map(r => ({
+                  breakpoint: Number(r.breakpoint),
+                  settings: {
+                    slidesToShow: Number(r.settings.slidesToShow),
+                    slidesToScroll: Number(r.settings.slidesToScroll)
+                  }
+                }))
+              : []
+          };
+
           setSliderSettings(prev => ({
             ...prev,
-            ...data.slider_settings,
-            responsive: data.slider_settings.responsive || prev.responsive
+            ...convertedSettings
           }));
         }
+
+        console.log('Slider settings:', sliderSettings);
+
       } catch (error) {
         console.error('Error fetching logo data:', error);
-        // Fallback data
         setLogos([
           {
             image: "/storage/default-logo-1.png",

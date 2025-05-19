@@ -72,7 +72,7 @@ const FacultyMembers = () => {
         
         <div className="faculty-accordion">
           {facultyData.groups.map((group) => (
-            <div className="accordion-item" key={group.id}>
+            <div className="accordion-item mb-3" key={group.id}>
               <h2 className="accordion-header">
                 <button 
                   className={`accordion-button ${activeAccordion === group.id ? '' : 'collapsed'}`}
