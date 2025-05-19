@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 const DynamicHighlightsSection = () => {
   const [highlightsData, setHighlightsData] = useState({
@@ -13,7 +13,7 @@ const DynamicHighlightsSection = () => {
   useEffect(() => {
     const fetchHighlightsData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/home-highlights`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/home-highlights`);
         if (response.data.status) {
           setHighlightsData({
             highlights: response.data.data.highlights,

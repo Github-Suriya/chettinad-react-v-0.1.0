@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 const DynamicContentSections = () => {
     const [sections, setSections] = useState([]);
@@ -9,7 +9,7 @@ const DynamicContentSections = () => {
     useEffect(() => {
         const fetchSections = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/content-sections`);
+                const response = await api.get(`${process.env.REACT_APP_API_URL}/api/content-sections`);
                 setSections(response.data.data);
                 setLoading(false);
             } catch (err) {

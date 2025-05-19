@@ -93,10 +93,7 @@ const OverviewSection = () => {
             <img 
               src={`${process.env.REACT_APP_API_URL}/public${overviewData.image}`}
               alt="College overview" 
-              className="img-fluid mb-3" 
-              onError={(e) => {
-                e.target.src = `${process.env.REACT_APP_API_URL}/storage/default-college.jpg`;
-              }}
+              className="img-fluid mb-3"
             />
           </div>
         </div>

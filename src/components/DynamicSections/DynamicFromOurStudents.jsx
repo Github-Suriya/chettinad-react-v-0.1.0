@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import api from "../../api";
 
 const DynamicFromOurStudents = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -25,30 +26,31 @@ const DynamicFromOurStudents = () => {
     const fetchData = async () => {
       try {
         // Fetch testimonials
-        const testimonialsRes = await fetch(`${process.env.REACT_APP_API_URL}/api/student-testimonials`);
-        const testimonialsData = await testimonialsRes.json();
-        
+        const testimonialsRes = await api.get(`${process.env.REACT_APP_API_URL}/api/student-testimonials`);
+        const testimonialsData = testimonialsRes.data;
+
         // Fetch slider settings
-        const settingsRes = await fetch(`${process.env.REACT_APP_API_URL}/api/slider-settings/student_testimonials`);
-        const settingsData = await settingsRes.json();
-        
+        const settingsRes = await api.get(`${process.env.REACT_APP_API_URL}/api/slider-settings/student_testimonials`);
+        const settingsData = settingsRes.data;
+
         // Transform settings to match react-slick's expected format
         const transformedSettings = {
           dots: settingsData.dots || false,
           infinite: settingsData.infinite || true,
           speed: settingsData.speed || 500,
           autoplay: settingsData.autoplay || false,
-          autoplaySpeed: settingsData.autoplay_speed || 5000, // Note property name change
-          slidesToShow: settingsData.slides_to_show || 3,     // Note property name change
-          slidesToScroll: settingsData.slides_to_scroll || 1, // Note property name change
-          responsive: settingsData.responsive ? 
-            settingsData.responsive.map(item => ({
-              breakpoint: item.breakpoint,
-              settings: {
-                slidesToShow: item.settings.slidesToShow,
-                slidesToScroll: item.settings.slidesToScroll || 1
-              }
-            })) : []
+          autoplaySpeed: settingsData.autoplay_speed || 5000,
+          slidesToShow: settingsData.slides_to_show || 3,
+          slidesToScroll: settingsData.slides_to_scroll || 1,
+          responsive: settingsData.responsive
+            ? settingsData.responsive.map(item => ({
+                breakpoint: item.breakpoint,
+                settings: {
+                  slidesToShow: item.settings.slidesToShow,
+                  slidesToScroll: item.settings.slidesToScroll || 1
+                }
+              }))
+            : []
         };
 
         setSliderSettings(transformedSettings);

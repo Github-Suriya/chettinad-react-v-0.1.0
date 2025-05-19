@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import Counter from "./Counter";
 
 const FactCounter = () => {
@@ -10,7 +10,7 @@ const FactCounter = () => {
   useEffect(() => {
     const fetchCounters = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/fact-counters`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/fact-counters`);
         if (response.data.status) {
           setCounters(response.data.data);
         } else {

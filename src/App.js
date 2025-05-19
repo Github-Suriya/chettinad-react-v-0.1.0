@@ -7,7 +7,7 @@ import CollegePage from './components/SchoolsAndColleges/CollegePage';
 function App() {
   return (
     <Router basename="/chettinad-react">
-      {/* <Header /> */}
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/schoolsandcolleges/:slug" element={<CollegePage />} />
