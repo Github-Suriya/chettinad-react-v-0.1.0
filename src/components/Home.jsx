@@ -147,7 +147,7 @@ const Home = () => {
               </div>
           </section>
           <DynamicContentSections />
-          <section className="high-school-study-educamb-area mt-5">
+          <section className="high-school-study-educamb-area mt-5 homepage">
               <div className="high-school-study-educamb-area-bg"
                   style={{ backgroundImage: 'url(https://generalcwdbucket.s3.us-east-1.amazonaws.com/assets/images/resources/high-school-study-educamb-area-bg.jpg)' }}>
               </div>

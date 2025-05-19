@@ -123,10 +123,6 @@ const DynamicImgCarousel = ({ groupId = null }) => {
                     <img 
                       src={item.image_path} 
                       alt={item.alt_text} 
-                      onError={(e) => {
-                        e.target.onerror = null; 
-                        e.target.src = "/chettinad-react/assets/images/placeholder.png";
-                      }} 
                     />
                   </div>
                 </a>
