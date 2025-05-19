@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 const DynamicFaqSection = ({ page = 'home' }) => {
   const [faqs, setFaqs] = useState([]);
@@ -10,8 +10,8 @@ const DynamicFaqSection = ({ page = 'home' }) => {
     const fetchData = async () => {
       try {
         const [faqRes, imageRes] = await Promise.all([
-          axios.get(`${process.env.REACT_APP_API_URL}/api/faqs/page/${page}`),
-          axios.get(`${process.env.REACT_APP_API_URL}/api/main-image/faq-section`)
+          api.get(`${process.env.REACT_APP_API_URL}/api/faqs/page/${page}`),
+          api.get(`${process.env.REACT_APP_API_URL}/api/main-image/faq-section`)
         ]);
         
         setFaqs(faqRes.data.data);

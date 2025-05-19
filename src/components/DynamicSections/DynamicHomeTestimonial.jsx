@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import api from '../../api';
 
 const DynamicHomeTestimonial = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -11,14 +12,10 @@ const DynamicHomeTestimonial = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/testimonials`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch testimonials');
-        }
-        const data = await response.json();
-        setTestimonials(data);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/testimonials`);
+        setTestimonials(response.data);
       } catch (err) {
-        setError(err.message);
+        setError(err.response?.data?.message || err.message || 'Something went wrong');
       } finally {
         setLoading(false);
       }

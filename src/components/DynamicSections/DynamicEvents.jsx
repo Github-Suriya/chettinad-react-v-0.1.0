@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 const DynamicEvents = () => {
   const [events, setEvents] = useState([]);
@@ -9,7 +9,7 @@ const DynamicEvents = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/events`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/events`);
         if (response.data.status) {
           // Ensure we have exactly 3 events
           const eventsData = response.data.data;

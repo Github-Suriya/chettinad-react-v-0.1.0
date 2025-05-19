@@ -1740,3 +1740,21 @@
         height: 50vh;
     }
 }
+
+.find-out-carousel .find-card {
+    padding: 0 !important;
+    width: 100%;
+    overflow: hidden !important;
+}
+
+.find-out-carousel .find-card .card-image-wrapper {
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.find-out-carousel .find-card .card-image-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import api from '../api';
 
 const Header = () => {
 
@@ -9,16 +10,15 @@ const Header = () => {
     useEffect(() => {
         const fetchMenus = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/menus`);
-                const data = await response.json();
-                setMenus(data);
+                const response = await api.get(`${process.env.REACT_APP_API_URL}/api/menus`);
+                setMenus(response.data);
             } catch (error) {
                 console.error('Error fetching menus:', error);
             } finally {
                 setLoading(false);
             }
         };
-        
+
         fetchMenus();
     }, []);
     
@@ -70,6 +70,8 @@ const Header = () => {
             );
         });
     };    
+
+    console.log('Menus:' + menus);
     
     if (loading) return <div>Loading...</div>;
 

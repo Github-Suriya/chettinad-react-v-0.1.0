@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -38,7 +38,7 @@ const DynamicAlumniStudents = () => {
   useEffect(() => {
     const fetchAlumni = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/alumni-students`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/alumni-students`);
         if (response.data.status) {
           setAlumni(response.data.data || []);
         } else {

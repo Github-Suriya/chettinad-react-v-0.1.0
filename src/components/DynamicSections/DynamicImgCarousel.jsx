@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css'; 
 import 'slick-carousel/slick/slick-theme.css';
-import axios from 'axios';
+import api from '../../api';
 
 const DynamicImgCarousel = ({ groupId = null }) => {
   const [carouselData, setCarouselData] = useState({
@@ -24,7 +24,7 @@ const DynamicImgCarousel = ({ groupId = null }) => {
           ? `${process.env.REACT_APP_API_URL}/api/img-carousel-items/${groupId}`
           : `${process.env.REACT_APP_API_URL}/api/img-carousel-items`;
         
-        const response = await axios.get(endpoint);
+        const response = await api.get(endpoint);
         
         if (response.data.status) {
           setCarouselData({

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 const DynamicDepartmentsSection = () => {
   const [departmentData, setDepartmentData] = useState({
@@ -13,7 +13,7 @@ const DynamicDepartmentsSection = () => {
   useEffect(() => {
     const fetchDepartmentData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/department-items`);
+        const response = await api.get(`${process.env.REACT_APP_API_URL}/api/department-items`);
         if (response.data.status) {
           setDepartmentData({
             leftColumn: response.data.data.left_column,
