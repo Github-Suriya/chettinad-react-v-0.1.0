@@ -10,6 +10,7 @@ import FacilitiesSection from './Partials/FacilitiesSection';
 import StudentLifeSection from './Partials/StudentLifeSection';
 import FindOutMoreSection from './Partials/FindOutMoreSection';
 import NewsEventsSection from './Partials/NewsEventsSection';
+import ProgramsSection from './Partials/ProgramsSection';
 
 const CollegePage = () => {
   return (
@@ -17,6 +18,7 @@ const CollegePage = () => {
         <BannerSection />
         <LatestNewsSection />
         <OverviewSection />
+        <ProgramsSection />
         <PrincipalSpeakSection />
         <LogoSection />
         <FacultyMembers />

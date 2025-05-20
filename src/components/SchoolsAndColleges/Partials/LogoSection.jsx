@@ -77,8 +77,6 @@ const LogoSection = () => {
           }));
         }
 
-        console.log('Slider settings:', sliderSettings);
-
       } catch (error) {
         console.error('Error fetching logo data:', error);
         setLogos([

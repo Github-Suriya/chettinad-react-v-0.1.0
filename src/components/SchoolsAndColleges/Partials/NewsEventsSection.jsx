@@ -18,7 +18,6 @@ const NewsEventsSection = () => {
       try {
         const response = await api.get(`${process.env.REACT_APP_API_URL}/api/schoolsandcolleges/${slug}/news-events`);
         setSectionData(response.data);
-        console.log('News and Events Data:', response.data.items);
       } catch (err) {
         setError(err.message);
       } finally {

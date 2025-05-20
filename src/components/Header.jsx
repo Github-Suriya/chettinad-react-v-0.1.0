@@ -69,9 +69,7 @@ const Header = () => {
                 </li>
             );
         });
-    };    
-
-    console.log('Menus:' + menus);
+    };
     
     if (loading) return <div>Loading...</div>;
 
