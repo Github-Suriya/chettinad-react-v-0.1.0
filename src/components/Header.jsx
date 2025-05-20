@@ -25,51 +25,159 @@ const Header = () => {
     const renderMenu = (menuItems) => {
         return menuItems.map((menu) => {
             const hasChildren = menu.children && menu.children.length > 0;
-            const hasMegaMenuChildren = hasChildren && menu.children.some(child => child.type === 'megamenu');
-    
+            const isMegaMenu = menu.type === 'main-menu' && hasChildren;
+            const extraData = menu.extra_data ?? null;
+
             if (hasChildren) {
-                return (
-                    <li key={menu.id} className={hasMegaMenuChildren ? 'dropdown' : 'link-dropdown'}>
-                        <a href={menu.url || '#'} className={hasMegaMenuChildren ? '' : 'link-dropdown-toggle'}>
-                            {menu.title}
-                            {!hasMegaMenuChildren && <i className="fa fa-caret-down"></i>}
-                        </a>
-    
-                        {hasMegaMenuChildren ? (
-                            <div className="megamenu">
-                                <div className="row">
-                                    {menu.children.map(child => (
-                                        <div className="col-md-3" key={child.id}>
-                                            <h3 className="megamenu-heading mb-2">{child.title}</h3>
-                                            {/* If you want links inside megamenu, update this accordingly */}
-                                            {child.extra_data ? (() => {
-                                                try {
-                                                const parsedData = JSON.parse(child.extra_data);
-                                                return <p>{parsedData.groups?.[0] ?? "Not Available"}</p>;
-                                                } catch (e) {
-                                                return <p>Invalid extra_data format</p>;
-                                                }
-                                            })() : <p>Not Available</p>}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ) : (
-                            <ul className="top-dropdown" style={{ display: 'none' }}>
-                                {renderMenu(menu.children)}
-                            </ul>
-                        )}
-                    </li>
-                );
-            }
-    
             return (
-                <li key={menu.id}>
-                    <Link to={menu.url || '#'}>{menu.title}</Link>
+                <li key={menu.id} className={isMegaMenu ? 'dropdown' : 'link-dropdown'}>
+                <a href={menu.url || '#'} className={isMegaMenu ? '' : 'link-dropdown-toggle'}>
+                    {menu.title}
+                    {!isMegaMenu && <i className="fa fa-caret-down"></i>}
+                </a>
+
+                {isMegaMenu ? (
+                    <div className="megamenu">
+                    <div className="row">
+                        {menu.children.map((child) => {
+                        const childExtraData = child.extra_data ?? null;
+                        
+                        // Campus layout (special case)
+                        if (childExtraData?.is_campus) {
+                            return (
+                            <div className={`col-md-${extraData?.columns === 2 ? '6' : '3'}`} key={child.id}>
+                                <a href="#" className="campus-link pb-2" style={{ color: 'var(--thm-bg)' }}>
+                                <strong>{child.title}</strong>
+                                </a>
+                                {!extraData?.mobile_only && (
+                                <>
+                                    <img 
+                                    src="/chettinaddemo/assets/images/sketch11.png" 
+                                    alt={`${child.title} image`} 
+                                    className="img-fluid" 
+                                    width="50%" 
+                                    />
+                                    <p className="px-5 pt-2" style={{
+                                    fontSize: 'var(--thm-para-font-size)',
+                                    textAlign: 'justify',
+                                    fontWeight: 500
+                                    }}>
+                                    {childExtraData.description}
+                                    <br />
+                                    <a 
+                                        href={childExtraData.link_url} 
+                                        className="readmore align-items-center d-flex justify-content-center"
+                                        style={{ color: 'var(--thm-bg)' }}
+                                    >
+                                        <i className="fa fa-hand-o-right"></i> &nbsp;{childExtraData.link_text}
+                                    </a>
+                                    </p>
+                                </>
+                                )}
+                            </div>
+                            );
+                        }
+
+                        // Section heading
+                        if (childExtraData?.is_heading) {
+                            return (
+                            <div className={`col-md-${extraData?.columns === 4 ? '2' : '3'}`} key={child.id}>
+                                <h3 className="megamenu-heading mb-2">{child.title}</h3>
+                                {childExtraData.description && (
+                                <p style={{
+                                    fontSize: 'var(--thm-para-font-size)',
+                                    textAlign: 'left',
+                                    fontWeight: 500
+                                }} className="mt-2 pe-5">
+                                    {childExtraData.description}
+                                </p>
+                                )}
+                                {childExtraData.is_readmore && (
+                                <a href="#" className="readmore mt-1" style={{ color: 'var(--thm-bg)' }}>
+                                    Discover More <i className="fa fa-long-arrow-right"></i>
+                                </a>
+                                )}
+                            </div>
+                            );
+                        }
+
+                        // Regular menu item
+                        return (
+                            <div className={`col-md-${extraData?.columns === 4 ? '3' : '2'}`} key={child.id}>
+                            {childExtraData?.parent_heading ? (
+                                <ul className={childExtraData.right_seperator ? 'right-seperator' : ''}>
+                                <li>
+                                    <a href={child.url || '#'}>{child.title}</a>
+                                </li>
+                                </ul>
+                            ) : (
+                                <ul>
+                                <li>
+                                    <a href={child.url || '#'}>{child.title}</a>
+                                </li>
+                                </ul>
+                            )}
+                            </div>
+                        );
+                        })}
+
+                        {/* Image column for special layouts */}
+                        {extraData?.has_image && !extraData.mobile_only && (
+                        <div className="col-md-4 d-none d-md-flex">
+                            <img 
+                            src="/chettinaddemo/assets/images/bg-image.webp" 
+                            alt="bg-image" 
+                            className="img-fluid" 
+                            />
+                        </div>
+                        )}
+
+                        {/* Carousel for Academics */}
+                        {extraData?.has_carousel && (
+                        <div className="col-md-4 d-none d-md-flex">
+                            <div className="research-banner-carousel owl-carousel owl-theme">
+                            <div className="item">
+                                <img 
+                                src="/chettinaddemo/assets/images/DSC04650.webp" 
+                                alt="schools-colleges-bg.webp" 
+                                className="img-fluid" 
+                                />
+                            </div>
+                            <div className="item">
+                                <img 
+                                src="/chettinaddemo/assets/images/images_0011_HOSTEL-B.jpg" 
+                                alt="schools-colleges-bg.webp" 
+                                className="img-fluid" 
+                                />
+                            </div>
+                            <div className="item">
+                                <img 
+                                src="/chettinaddemo/assets/images/4Z9A8712.webp" 
+                                alt="schools-colleges-bg.webp" 
+                                className="img-fluid" 
+                                />
+                            </div>
+                            </div>
+                        </div>
+                        )}
+                    </div>
+                    </div>
+                ) : (
+                    <ul className="top-dropdown" style={{ display: 'none' }}>
+                    {renderMenu(menu.children)}
+                    </ul>
+                )}
                 </li>
             );
+            }
+
+            return (
+            <li key={menu.id}>
+                <Link to={menu.url || '#'}>{menu.title}</Link>
+            </li>
+            );
         });
-    };
+        };
     
     if (loading) return <div>Loading...</div>;
 
