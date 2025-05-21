@@ -25,7 +25,7 @@ const Home = () => {
       useEffect(() => {
         const fetchBannerData = async () => {
           try {
-            const response = await api.get(`${process.env.REACT_APP_API_URL}/api/menus/banner`);
+            const response = await api.get(`${process.env.REACT_APP_API_URL}/api/main-banner`);
             setBannerData({
               videoUrl: response.data.videoUrl,
               title: response.data.title,
