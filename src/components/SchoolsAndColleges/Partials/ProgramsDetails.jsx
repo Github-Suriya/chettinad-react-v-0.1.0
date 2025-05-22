@@ -256,6 +256,7 @@ const ProgramsDetails = () => {
         </section>
       )}
     </main>
+
   );
 };
 

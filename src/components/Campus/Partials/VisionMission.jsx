@@ -1,0 +1,61 @@
+import Slider from 'react-slick';
+
+const galleryImages = [
+    "4Z9A8631", "4Z9A8703", "4Z9A8794", "Chettinad_.0027", 
+    "DSC2935", "DSC04650", "DSC05034"
+];
+
+const VisionMission = () => {
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        fade: true
+    };
+
+    return (
+        <section className="parralex_section explore-full-image">
+            <div className="explore-text">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-4 col-lg-4 col-12 d-flex align-items-center justify-content-center wow fadeIn" data-wow-duration="2s">
+                            <h3 className="block-title bt-left-aligned py-5 mobile-star-background position-relative">Step into CARE</h3>
+                        </div>
+                        <div className="col-md-6 star-background">
+                            <p className="wow fadeIn fw-bold" data-wow-duration="2s" data-wow-delay="0.2s">
+                                Discover a campus where learning meets innovation. Spread across 100 acres of greenery, CARE
+                                offers a modern, student-friendly environment with world-class infrastructure, advanced
+                                research facilities, and sustainable initiatives.
+                            </p>
+                            <p className="wow fadeIn fw-bold" data-wow-duration="2s" data-wow-delay="0.4s">
+                                Whether it's cutting-edge technology, interactive learning spaces, or a vibrant student
+                                life, CARE provides the perfect foundation for academic and personal growth. Experience
+                                excellence at CARE!
+                            </p>
+                        </div>
+                    </div>
+                    <div className="row wow fadeIn" data-wow-duration="2s">
+                        <div className="ac-overview p-0">
+                            <div className="pera-dec">
+                                <Slider {...settings} className="gallery-images-carousel">
+                                    {galleryImages.map(img => (
+                                        <div key={img} className="gallery_single_item">
+                                            <img src={`/chettinad-react/assets/images/${img}.webp`} alt="gallery_image" />
+                                        </div>
+                                    ))}
+                                </Slider>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default VisionMission;

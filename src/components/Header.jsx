@@ -63,7 +63,7 @@ const Header = () => {
                                         return (
                                             <ul key={item.id} className="right-seperator">
                                                 <li>
-                                                    <a href={item.url || '#'}>{item.title}</a>
+                                                    <Link to={item.url || '#'}>{item.title}</Link>
                                                 </li>
                                             </ul>
                                         );
@@ -114,7 +114,7 @@ const Header = () => {
                             {menu.title}
                             <i className="fa fa-caret-down"></i>
                         </a>
-                        <ul className="top-dropdown">
+                        <ul className="top-dropdown" style={{display: 'none'}}>
                             {renderMenu(menu.children)}
                         </ul>
                     </li>
