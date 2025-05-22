@@ -1,34 +1,34 @@
 const schools = [
     {
-        img: "pharma",
+        img: "pharma.webp",
         title: "Chettinad School of Pharmaceutical Sciences"
     },
     {
-        img: "physiotherap",
+        img: "physiotherap.jpg",
         title: "Chettinad School of Physiotherapy"
     },
     {
-        img: "nursing",
+        img: "nursing.webp",
         title: "Chettinad College of Nursing"
     },
     {
-        img: "Architecture",
+        img: "Architecture.webp",
         title: "Chettinad School of Architecture"
     },
     {
-        img: "law",
+        img: "law.webp",
         title: "Chettinad School of Law"
     },
     {
-        img: "occu_therapy",
+        img: "occu_therapy.jpg",
         title: "Chettinad School of Occupational Therapy"
     },
     {
-        img: "medicine",
+        img: "medicine.webp",
         title: "Chettinad Faculty of Medicine"
     },
     {
-        img: "Allied-Health-Science",
+        img: "Allied-Health-Science.webp",
         title: "Chettinad Faculty of Allied Health Sciences"
     }
 ];
@@ -45,7 +45,7 @@ const SchoolsAndColleges = () => {
                                  data-wow-duration="2s" data-wow-delay={`${0.2 * (index % 3)}s`}>
                                 <div className="card facility-card">
                                     <div className="overflow-hidden">
-                                        <img src={`/chettinad-react/assets/images/${school.img}.webp`} 
+                                        <img src={`/chettinad-react/assets/images/${school.img}`} 
                                              className="card-img-top facility-img" alt="facility" />
                                     </div>
                                     <div className="card-body align-items-center d-flex justify-content-center">

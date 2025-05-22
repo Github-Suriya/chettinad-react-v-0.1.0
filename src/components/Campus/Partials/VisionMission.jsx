@@ -1,4 +1,8 @@
-import Slider from 'react-slick';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/autoplay';
 
 const galleryImages = [
     "4Z9A8631", "4Z9A8703", "4Z9A8794", "Chettinad_.0027", 
@@ -6,16 +10,26 @@ const galleryImages = [
 ];
 
 const VisionMission = () => {
-
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        fade: true
+    const swiperSettings = {
+        loop: true,
+        spaceBetween: 10,
+        slidesPerView: 3,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        modules: [Autoplay],
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+            },
+            768: {
+                slidesPerView: 1,
+            },
+            1024: {
+                slidesPerView: 3,
+            }
+        }
     };
 
     return (
@@ -42,13 +56,18 @@ const VisionMission = () => {
                     <div className="row wow fadeIn" data-wow-duration="2s">
                         <div className="ac-overview p-0">
                             <div className="pera-dec">
-                                <Slider {...settings} className="gallery-images-carousel">
+                                <Swiper {...swiperSettings} className="gallery-images-carousel">
                                     {galleryImages.map(img => (
-                                        <div key={img} className="gallery_single_item">
-                                            <img src={`/chettinad-react/assets/images/${img}.webp`} alt="gallery_image" />
-                                        </div>
+                                        <SwiperSlide key={img}>
+                                            <div className="gallery_single_item">
+                                                <img 
+                                                    src={`/chettinad-react/assets/images/${img}.webp`} 
+                                                    alt="gallery_image" 
+                                                />
+                                            </div>
+                                        </SwiperSlide>
                                     ))}
-                                </Slider>
+                                </Swiper>
                             </div>
                         </div>
                     </div>

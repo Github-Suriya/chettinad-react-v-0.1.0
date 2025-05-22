@@ -1,28 +1,18 @@
-import { useEffect } from 'react';
-import Swiper from 'swiper';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Autoplay } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+
+const campusImages = [
+    'atrium', 'auditorium', 'food-court', 
+    'sports', 'hostel', 'gym', 
+    'library', 'classroom'
+];
 
 const Overview = () => {
-    useEffect(() => {
-        new Swiper(".campusSwiper", {
-            effect: "coverflow",
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: "auto",
-            coverflowEffect: {
-                rotate: 30,
-                stretch: 0,
-                depth: 300,
-                modifier: 1,
-                slideShadows: false,
-            },
-            loop: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: true,
-            },
-        });
-    }, []);
-
     const toggleReadMore = () => {
         const readMoreContent = document.getElementById('read_more_content');
         const readMoreBtn = document.getElementById('read_more_btn');
@@ -67,15 +57,35 @@ const Overview = () => {
                                     <div className="col-md-6 col-lg-5 col-12 wow slideInUp" data-wow-duration="2s">
                                         <div className="university-life">
                                             <div className="image diagonal-stripes">
-                                                <div className="swiper campusSwiper">
-                                                    <div className="swiper-wrapper">
-                                                        {['atrium', 'auditorium', 'food-court', 'sports', 'hostel', 'gym', 'library', 'classroom'].map((img) => (
-                                                            <div className="swiper-slide" key={img}>
-                                                                <img src={`/chettinad-react/assets/images/${img}.webp`} alt={`${img} slide`} />
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
+                                                <Swiper
+                                                    effect={'coverflow'}
+                                                    grabCursor={true}
+                                                    centeredSlides={true}
+                                                    slidesPerView={'auto'}
+                                                    coverflowEffect={{
+                                                        rotate: 30,
+                                                        stretch: 0,
+                                                        depth: 300,
+                                                        modifier: 1,
+                                                        slideShadows: false,
+                                                    }}
+                                                    autoplay={{
+                                                        delay: 2500,
+                                                        disableOnInteraction: true,
+                                                    }}
+                                                    modules={[EffectCoverflow, Autoplay]}
+                                                    className="campusSwiper"
+                                                >
+                                                    {campusImages.map((img) => (
+                                                        <SwiperSlide key={img}>
+                                                            <img 
+                                                                src={`/chettinad-react/assets/images/${img}.webp`} 
+                                                                alt={`${img} slide`} 
+                                                                className="swiper-slide-img"
+                                                            />
+                                                        </SwiperSlide>
+                                                    ))}
+                                                </Swiper>
                                             </div>
                                         </div>
                                     </div>
